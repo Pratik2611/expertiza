@@ -133,10 +133,19 @@ class ResponseController < ApplicationController
     map_id = params[:id]
     map_id = params[:map_id] if !params[:map_id].nil?# pass map_id as a hidden field in the review form
     @map = ResponseMap.find(map_id)
+    # added for srq
+    @team_id = @map.reviewee_id
+
     set_all_responses
     if params[:review][:questionnaire_id]
       @questionnaire = Questionnaire.find(params[:review][:questionnaire_id])
       @round = params[:review][:round]
+     # added for srq
+      @sr_questionnaire_id = Team.get_srq_id_of_team(@team_id)
+      unless @sr_questionnaire_id.nil?
+        @sr_questionnaire = Questionnaire.find(@sr_questionnaire_id)
+      end
+
     else
       @round = nil
     end
@@ -161,6 +170,13 @@ class ResponseController < ApplicationController
     # ,:version_num=>@version)
     # Change the order for displaying questions for editing response views.
     questions = sort_questions(@questionnaire.questions)
+
+    # added for srq
+    unless @sr_questionnaire.nil?
+      sr_questions = sort_questions(@sr_questionnaire.questions)
+      questions = questions + sr_questions
+    end
+
     create_answers(params, questions) if params[:responses]
     msg = "Your response was successfully saved."
     error_msg = ""
@@ -269,6 +285,11 @@ class ResponseController < ApplicationController
     new_response ? set_questionnaire_for_new_response : set_questionnaire
     set_dropdown_or_scale
     @questions = sort_questions(@questionnaire.questions)
+    # added for srq
+    unless @sr_questionnaire.nil?
+      @sr_questions = sort_questions(@sr_questionnaire.questions)
+    end
+
     @min = @questionnaire.min_question_score
     @max = @questionnaire.max_question_score
   end
