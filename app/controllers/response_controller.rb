@@ -279,6 +279,11 @@ class ResponseController < ApplicationController
       reviewees_topic = SignedUpTeam.topic_id_by_team_id(@contributor.id)
       @current_round = @assignment.number_of_current_round(reviewees_topic)
       @questionnaire = @map.questionnaire(@current_round)
+      # for supplementary review questionnaire
+      @sr_questionnaire_id = Team.get_srq_id_of_team(@contributor.id)
+      unless @sr_questionnaire_id.nil?
+        @sr_questionnaire = Questionnaire.find(@sr_questionnaire_id)
+      end
     when
       "MetareviewResponseMap",
       "TeammateReviewResponseMap",

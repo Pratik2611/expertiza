@@ -37,3 +37,7 @@
     <% end %>
   <% end %>
 <% end %>
+
+<% if stage != "Finished" %>
+  <%= link_to "Create Supplementary Review Questionnaire", {:controller => "questionnaires", :action => "create_srq", :id => participant.id } %>
+<% end  %>

@@ -251,4 +251,14 @@ class Team < ActiveRecord::Base
   end
 
   # REFACTOR END:: class methods import export moved from course_team & assignment_team to here
+
+  # method for finding srq_id of a particular team
+  def self.get_srq_id_of_team(team_id)
+    t = Team.find(team_id)
+    if t.blank?
+      nil
+    else
+      t.srq_id
+    end
+  end
 end
