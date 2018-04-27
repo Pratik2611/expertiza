@@ -321,6 +321,8 @@
 <%= check_box_tag('assignment_questionnaire[used_in_round]', 'true', @reviewvarycheck,:onclick=>"handleCheckReviewVary(this)" ) %>
 <%= label_tag('assignment_questionnaire[used_in_round]', 'Review rubric varies by round?') %>
 <br/>
+
+<!-- Add a student generated questions checkbox -->
 <input name="assignment_form[assignment][student_gen_questions]" type="hidden" value="false"/>
 <%= check_box_tag('assignment_form[assignment][student_gen_questions]', 'true', @assignment_form.assignment.student_gen_questions) %>
 <%= label_tag('assignment_form[assignment][student_gen_questions]', 'Allow Student Generated Questions?') %>
