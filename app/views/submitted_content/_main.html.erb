@@ -37,3 +37,10 @@
     <% end %>
   <% end %>
 <% end %>
+
+<h3>Add your questions to the review rubric:</h3>
+<% if @assignment.student_gen_questions? %>
+  placeholder for link
+<% else %>
+  the instructor has not enabled this feature for this assignment
+<% end %>
